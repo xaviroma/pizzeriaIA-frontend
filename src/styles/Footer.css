@@ -1,0 +1,33 @@
+/* src/components/Footer.css */
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.footer-container p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .footer {
+    padding: 15px; /* Añadir un poco más de padding en pantallas pequeñas */
+  }
+
+  .footer-container p {
+    font-size: 0.9rem; /* Reducir tamaño de texto en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px; /* Más espacio en pantallas extra pequeñas */
+  }
+
+  .footer-container p {
+    font-size: 0.8rem; /* Aún más pequeño en pantallas muy pequeñas */
+  }
+}

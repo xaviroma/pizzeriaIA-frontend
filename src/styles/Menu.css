@@ -1,0 +1,116 @@
+/* Estilos generales para el menú */
+.menu {
+  text-align: center;
+  margin: 20px;
+}
+
+.menu h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.category-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 15px;
+  width: 180px;
+  text-decoration: none;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Título del menu-item */
+.menu-item h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  position: relative;
+  padding-bottom: 10px; /* Ajuste el espacio para el subrayado */
+  transition: color 0.3s ease;
+}
+
+/* Cambia el color del título al pasar el ratón */
+.menu-item:hover h3 {
+  color: #e63946; /* Cambio de color del texto al pasar el ratón */
+}
+
+/* Subrayado animado */
+.menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #e63946; /* Color del subrayado */
+  transition: width 0.3s ease; /* Animación de la expansión */
+}
+
+/* El subrayado se expande al pasar el ratón */
+.menu-item:hover::after {
+  width: 100%;
+}
+
+.menu-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.menu-item:hover {
+  color: #e63946; /* Cambia el color del texto al pasar el ratón */
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.3); /* Sombra animada */
+}
+
+/* Ajustes responsivos */
+
+/* Pantallas pequeñas (máximo 768px) */
+@media (max-width: 768px) {
+  .menu h1 {
+    font-size: 2rem; /* Reducir tamaño del título */
+  }
+
+  .menu-item {
+    width: 150px; /* Reducir el tamaño de los items del menú */
+    padding: 12px;
+  }
+
+  .menu-item h3 {
+    font-size: 1rem; /* Reducir tamaño del texto */
+  }
+
+  .category-container {
+    gap: 10px; /* Reducir espacio entre los items */
+  }
+}
+
+/* Pantallas muy pequeñas (máximo 480px) */
+@media (max-width: 480px) {
+  .menu h1 {
+    font-size: 1.8rem; /* Reducir tamaño aún más en pantallas extra pequeñas */
+  }
+
+  .menu-item {
+    width: 130px; /* Reducir más el tamaño de los items */
+    padding: 10px;
+  }
+
+  .menu-item h3 {
+    font-size: 0.9rem; /* Reducir tamaño de los títulos */
+  }
+}

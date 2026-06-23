@@ -1,0 +1,115 @@
+/* Estilos del carrito */
+.cart {
+  padding: 20px;
+}
+
+/* Estilo de cada item en el carrito */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+/* Información del item en el carrito */
+.cart-item-info {
+  display: flex;
+  align-items: center;
+}
+
+/* Imagen del producto */
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+/* Detalles del item */
+.cart-item-details {
+  margin-left: 10px;
+}
+
+/* Acciones (botones) dentro de cada item del carrito */
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Controles de la cantidad */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+
+/* Botón de eliminar */
+.remove-btn {
+  background-color: #ff6347;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+/* Efecto hover del botón de eliminar */
+.remove-btn:hover {
+  background-color: #e53e2f;
+}
+
+/* Total del carrito */
+.cart-total {
+  text-align: right;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+/* Ajustes responsivos */
+
+/* Pantallas pequeñas (máximo 768px) */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-direction: column; /* Disponer los elementos verticalmente en pantallas más pequeñas */
+    align-items: flex-start;
+  }
+
+  .cart-item-info {
+    margin-bottom: 10px;
+  }
+
+  .cart-item img {
+    width: 50px; /* Reducir el tamaño de la imagen */
+    height: 50px;
+  }
+
+
+  .remove-btn {
+    padding: 6px 10px; /* Reducir tamaño del botón de eliminar */
+  }
+
+  .cart-total {
+    font-size: 1rem; /* Reducir tamaño de la fuente del total */
+  }
+}
+
+/* Pantallas muy pequeñas (máximo 480px) */
+@media (max-width: 480px) {
+  .cart-item img {
+    width: 40px; /* Reducir aún más el tamaño de la imagen */
+    height: 40px;
+  }
+
+
+  .remove-btn {
+    padding: 6px 8px; /* Ajustar el tamaño del botón de eliminar */
+  }
+
+  .cart-total {
+    font-size: 0.9rem; /* Reducir tamaño de la fuente del total */
+  }
+}

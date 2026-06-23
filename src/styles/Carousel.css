@@ -1,0 +1,17 @@
+/* src/components/Carousel.css */
+
+.carousel-container {
+  width: 100%;
+  max-width: 1200px; /* Máximo ancho del carrusel */
+  margin: 0 auto; /* Centra el contenedor */
+  padding: 20px 0; /* Espacio arriba y abajo */
+  margin-top: 100px; /* Añadido margen superior para evitar solapamiento con el header fijo */
+}
+
+.carousel-image {
+  width: 100%; /* Asegura que las imágenes ocupen todo el ancho del contenedor */
+  height: 400px; /* Establece una altura fija, puedes ajustar a tu gusto */
+  object-fit: cover; /* Asegura que la imagen cubra todo el espacio sin deformarse */
+  border-radius: 10px; /* Bordes redondeados */
+  margin: 0 auto; /* Centra la imagen dentro del slide */
+}
