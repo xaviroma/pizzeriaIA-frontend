@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Footer.css"; // Estilo del Footer
 
 const Footer: React.FC = () => {
+  useEffect(() => {
+    console.log("[PizzeriaIA] Footer montado");
+  }, []);
+
   return (
     <footer className="footer">
       <div className="footer-container">

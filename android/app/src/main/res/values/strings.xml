@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">prueba1.prueba</string>
+    <string name="title_activity_main">prueba1.prueba</string>
+    <string name="package_name">prueba1.prueba</string>
+    <string name="custom_url_scheme">prueba1.prueba</string>
+</resources>

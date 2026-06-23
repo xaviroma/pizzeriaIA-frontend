@@ -1,6 +1,8 @@
 import api from "./axiosConfig";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,17 +18,43 @@ import "./App.css";
 
 import { ProductType, CartItem } from "./components/types";
 
+const RouteLogger: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("[PizzeriaIA] Ruta actual:", location.pathname);
+  }, [location.pathname]);
+
+  return null;
+};
+
 const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [products, setProducts] = useState<ProductType[]>([]);
 
+  console.log("[PizzeriaIA] App render - productos:", products.length, "carrito:", cart.length);
+
+  useEffect(() => {
+    console.log("[PizzeriaIA] App montado");
+  }, []);
+
+  useEffect(() => {
+    console.log("[PizzeriaIA] Productos actualizados:", products.length, products);
+  }, [products]);
+
+  useEffect(() => {
+    console.log("[PizzeriaIA] Carrito actualizado:", cart);
+  }, [cart]);
+
   useEffect(() => {
     const fetchProducts = async () => {
+      console.log("[PizzeriaIA] Llamando backend GET /productos...");
       try {
         const response = await api.get("/productos");
+        console.log("[PizzeriaIA] Productos recibidos:", response.data?.length ?? 0, response.data);
         setProducts(response.data);
       } catch (error) {
-        console.error("Error al obtener los productos", error);
+        console.error("[PizzeriaIA] Error al obtener los productos", error);
       }
     };
 
@@ -34,6 +62,7 @@ const App: React.FC = () => {
   }, []);
 
   const addToCart = (items: CartItem[]) => {
+  console.log("[PizzeriaIA] addToCart:", items);
   setCart((prevCart) => {
     const newCart = [...prevCart];
 
@@ -54,6 +83,7 @@ const App: React.FC = () => {
       }
     });
 
+    console.log("[PizzeriaIA] Carrito tras addToCart:", newCart);
     return newCart;
   });
 };
@@ -63,6 +93,7 @@ const App: React.FC = () => {
     size: CartItem["tamañoSeleccionado"],
     quantity: number
   ) => {
+    console.log("[PizzeriaIA] updateQuantity:", { productId, size, quantity });
     setCart((prevCart) =>
       prevCart.map((product) =>
         product.id === productId &&
@@ -77,6 +108,7 @@ const App: React.FC = () => {
     productId: number,
     size: CartItem["tamañoSeleccionado"]
   ) => {
+    console.log("[PizzeriaIA] removeFromCart:", { productId, size });
     setCart((prevCart) =>
       prevCart.filter(
         (product) =>
@@ -88,8 +120,15 @@ const App: React.FC = () => {
     );
   };
 
+  const logCategoryProducts = (category: string) => {
+    const filtered = products.filter((p) => p.categoria?.nombre === category);
+    console.log(`[PizzeriaIA] Productos filtrados (${category}):`, filtered.length, filtered);
+    return filtered;
+  };
+
   return (
     <Router>
+      <RouteLogger />
       <div className="App">
         <Header cartItemCount={cart.reduce((total, item) => total + item.quantity, 0)}/>
         <Carousel />
@@ -102,9 +141,8 @@ const App: React.FC = () => {
               path="/entrantes"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Entrantes"
-                  )}
+                  category="Entrantes"
+                  products={logCategoryProducts("Entrantes")}
                   onAddToCart={addToCart}
                 />
               }
@@ -114,9 +152,8 @@ const App: React.FC = () => {
               path="/menus"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Menus"
-                  )}
+                  category="Menus"
+                  products={logCategoryProducts("Menus")}
                   onAddToCart={addToCart}
                 />
               }
@@ -126,9 +163,8 @@ const App: React.FC = () => {
               path="/pizzas"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Pizzas"
-                  )}
+                  category="Pizzas"
+                  products={logCategoryProducts("Pizzas")}
                   onAddToCart={addToCart}
                 />
               }
@@ -138,9 +174,8 @@ const App: React.FC = () => {
               path="/hamburguesas"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Hamburguesas"
-                  )}
+                  category="Hamburguesas"
+                  products={logCategoryProducts("Hamburguesas")}
                   onAddToCart={addToCart}
                 />
               }
@@ -150,9 +185,8 @@ const App: React.FC = () => {
               path="/bocatas"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Bocatas"
-                  )}
+                  category="Bocatas"
+                  products={logCategoryProducts("Bocatas")}
                   onAddToCart={addToCart}
                 />
               }
@@ -162,9 +196,8 @@ const App: React.FC = () => {
               path="/sandwiches"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Sandwiches"
-                  )}
+                  category="Sandwiches"
+                  products={logCategoryProducts("Sandwiches")}
                   onAddToCart={addToCart}
                 />
               }
@@ -174,9 +207,8 @@ const App: React.FC = () => {
               path="/ensaladas"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Ensaladas"
-                  )}
+                  category="Ensaladas"
+                  products={logCategoryProducts("Ensaladas")}
                   onAddToCart={addToCart}
                 />
               }
@@ -186,9 +218,8 @@ const App: React.FC = () => {
               path="/bebidas"
               element={
                 <ProductList
-                  products={products.filter(
-                    (p) => p.categoria.nombre === "Bebidas"
-                  )}
+                  category="Bebidas"
+                  products={logCategoryProducts("Bebidas")}
                   onAddToCart={addToCart}
                 />
               }

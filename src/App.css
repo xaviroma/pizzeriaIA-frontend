@@ -38,12 +38,12 @@ header {
 }
 
 /* Contenedor dentro del header */
-header .header-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.header-container {
+  height: 100%;
   display: flex;
+  align-items: center; /* centra verticalmente */
   justify-content: space-between;
-  align-items: center;
+  padding: 0 20px;
 }
 
 /* Estilo para el menú */
@@ -100,18 +100,10 @@ header .header-container {
   box-shadow: 0 0 15px rgba(233, 180, 13, 0.5); /* Sombra dorada */
 }
 
-/* Estilo para las tarjetas de productos */
-.product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Aumenté el tamaño mínimo de las columnas */
-  gap: 30px;
-  padding: 20px;
-}
-
 /* Ajustar el espacio superior para no solaparse con el header */
 .main-content {
   flex-grow: 1;
-  padding-top: 100px; /* Ajusta el padding superior para que no se superponga al header fijo */
+  padding-top: 80px; /* Ajusta el padding superior para que no se superponga al header fijo */
 }
 
 /* Estilos del footer */
@@ -142,9 +134,6 @@ footer {
     flex-direction: column;
   }
 
-  .product-list {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Ajusté el tamaño en pantallas pequeñas */
-  }
 }
 
 /* Pantallas muy pequeñas (máximo 480px) */

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CartItem } from "./types";
 import "../styles/OrderDetail.css";
 import { Link } from "react-router-dom";
@@ -14,6 +14,10 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
   onUpdateQuantity,
   onRemoveFromCart
 }) => {
+  useEffect(() => {
+    console.log("[PizzeriaIA] OrderDetail montado, items en carrito:", cart.length, cart);
+  }, [cart]);
+
   const total = cart.reduce((acc, product) => {
     const price =
       product.tamañoSeleccionado === "Pequena"
@@ -24,6 +28,8 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
 
     return acc + price * product.quantity;
   }, 0);
+
+  console.log("[PizzeriaIA] OrderDetail total:", total);
 
   return (
     <div className="order-detail">

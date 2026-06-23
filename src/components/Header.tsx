@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Header.css"; // Estilo del Header
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface HeaderProps {
   cartItemCount: number; // Recibe el número de productos en el carrito
 }
 
 const Header: React.FC<HeaderProps> = ({ cartItemCount }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("[PizzeriaIA] Header render - ruta:", location.pathname, "items carrito:", cartItemCount);
+  }, [location.pathname, cartItemCount]);
+
   return (
     <header className="header">
       <div className="header-container">

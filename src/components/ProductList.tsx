@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductType, CartItem } from "./types";
 import "../styles/ProductList.css";
 
 interface ProductListProps {
+  category?: string;
   products: ProductType[];
   onAddToCart: (items: CartItem[]) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
+const ProductList: React.FC<ProductListProps> = ({ category, products, onAddToCart }) => {
   const [quantities, setQuantities] = useState<{
     [productId: number]: { [size: string]: number };
   }>({});
+
+  useEffect(() => {
+    console.log(`[PizzeriaIA] ProductList montado${category ? ` (${category})` : ""}:`, products.length, "productos", products);
+  }, [category, products]);
 
   const isValidPrice = (value: any) =>
     value !== null && value !== undefined && value !== "" && Number(value) > 0;
@@ -18,7 +23,12 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
   const handleAddToCart = (product: ProductType) => {
     const productEntries = Object.entries(quantities[product.id] || {});
 
-    if (productEntries.length === 0) return;
+    console.log("[PizzeriaIA] ProductList handleAddToCart:", product.nombre, productEntries);
+
+    if (productEntries.length === 0) {
+      console.warn("[PizzeriaIA] No hay cantidades seleccionadas para:", product.nombre);
+      return;
+    }
 
     const itemsToAdd: CartItem[] = productEntries.map(([size, quantity]) => ({
       ...product,
@@ -26,6 +36,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
       quantity,
     }));
 
+    console.log("[PizzeriaIA] Items a añadir al carrito:", itemsToAdd);
     onAddToCart(itemsToAdd);
   };
 
@@ -41,6 +52,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
           size: "Pequena" | "Mediana" | "Familiar",
           delta: number
         ) => {
+          console.log("[PizzeriaIA] Cambio cantidad:", product.nombre, size, delta);
           setQuantities((prev) => ({
             ...prev,
             [product.id]: {
@@ -70,7 +82,9 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
 
             <h3>{product.nombre}</h3>
 
-            <p>{product.descripcion}</p>
+            <div className="ingredients">
+              {product.descripcion}
+            </div>
 
             <div className="size-selection">
               {hasSizes ? (
