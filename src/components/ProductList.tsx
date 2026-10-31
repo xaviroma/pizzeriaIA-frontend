@@ -8,27 +8,28 @@ interface ProductListProps {
   onAddToCart: (items: CartItem[]) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ category, products, onAddToCart }) => {
+const ProductList: React.FC<ProductListProps> = ({
+  category,
+  products,
+  onAddToCart,
+}) => {
   const [quantities, setQuantities] = useState<{
     [productId: number]: { [size: string]: number };
   }>({});
 
   useEffect(() => {
-    console.log(`[PizzeriaIA] ProductList montado${category ? ` (${category})` : ""}:`, products.length, "productos", products);
+    console.log("[PizzeriaIA] ProductList:", category, products.length);
   }, [category, products]);
 
   const isValidPrice = (value: any) =>
     value !== null && value !== undefined && value !== "" && Number(value) > 0;
 
   const handleAddToCart = (product: ProductType) => {
-    const productEntries = Object.entries(quantities[product.id] || {});
+    const productEntries = Object.entries(
+      quantities[product.id] || {}
+    ).filter(([, quantity]) => quantity > 0);
 
-    console.log("[PizzeriaIA] ProductList handleAddToCart:", product.nombre, productEntries);
-
-    if (productEntries.length === 0) {
-      console.warn("[PizzeriaIA] No hay cantidades seleccionadas para:", product.nombre);
-      return;
-    }
+    if (productEntries.length === 0) return;
 
     const itemsToAdd: CartItem[] = productEntries.map(([size, quantity]) => ({
       ...product,
@@ -36,12 +37,16 @@ const ProductList: React.FC<ProductListProps> = ({ category, products, onAddToCa
       quantity,
     }));
 
-    console.log("[PizzeriaIA] Items a añadir al carrito:", itemsToAdd);
     onAddToCart(itemsToAdd);
+
+    setQuantities((prev) => ({
+      ...prev,
+      [product.id]: {},
+    }));
   };
 
   return (
-    <div className="product-list">
+    <div className="product-grid">
       {products.map((product) => {
         const hasSizes =
           isValidPrice(product.precioPequena) &&
@@ -52,93 +57,110 @@ const ProductList: React.FC<ProductListProps> = ({ category, products, onAddToCa
           size: "Pequena" | "Mediana" | "Familiar",
           delta: number
         ) => {
-          console.log("[PizzeriaIA] Cambio cantidad:", product.nombre, size, delta);
           setQuantities((prev) => ({
             ...prev,
             [product.id]: {
               ...prev[product.id],
-              [size]: Math.max(0, (prev[product.id]?.[size] || 0) + delta),
+              [size]: Math.max(
+                0,
+                (prev[product.id]?.[size] || 0) + delta
+              ),
             },
           }));
         };
 
-        const singlePrice =
-          isValidPrice(product.precioPequena)
-            ? product.precioPequena
-            : isValidPrice(product.precioMediana)
-            ? product.precioMediana
-            : product.precioFamiliar;
+        const totalSelected = Object.values(
+          quantities[product.id] || {}
+        ).reduce((a, b) => a + b, 0);
 
         return (
-          <div key={product.id} className="product-item">
-            <img
-              src={
-                product.imagen
-                  ? `/images/${product.imagen}`
-                  : "/images/imagen_no_disponible.jpg"
-              }
-              alt={product.nombre}
-            />
+          <div key={product.id} className="product-card">
 
-            <h3>{product.nombre}</h3>
-
-            <div className="ingredients">
-              {product.descripcion}
+            {/* IMAGE */}
+            <div className="product-image">
+              <img
+                src={
+                  product.imagen
+                    ? `/images/${product.imagen}`
+                    : "/images/imagen_no_disponible.jpg"
+                }
+                alt={product.nombre}
+              />
+              <div className="image-overlay" />
             </div>
 
-            <div className="size-selection">
-              {hasSizes ? (
-                (["Pequena", "Mediana", "Familiar"] as const).map((size) => (
-                  <div key={size} className="size-row">
+            {/* CONTENT */}
+            <div className="product-content">
+              <h3>{product.nombre}</h3>
+
+              <p className="description">{product.descripcion}</p>
+
+              <div className="sizes">
+                {hasSizes ? (
+                  (["Pequena", "Mediana", "Familiar"] as const).map(
+                    (size) => (
+                      <div key={size} className="size-row">
+                        <div className="size-info">
+                          <span>{size}</span>
+                          <strong>
+                            {
+                              product[
+                                `precio${size}` as keyof ProductType
+                              ] as number
+                            }{" "}
+                            €
+                          </strong>
+                        </div>
+
+                        <div className="qty">
+                          <button onClick={() => handleChange(size, -1)}>
+                            −
+                          </button>
+
+                          <span>
+                            {quantities[product.id]?.[size] || 0}
+                          </span>
+
+                          <button onClick={() => handleChange(size, 1)}>
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  )
+                ) : (
+                  <div className="size-row">
                     <div className="size-info">
-                      <span className="size-name">{size}</span>
-                      <span className="size-price">
-                        {product[`precio${size}` as keyof ProductType] as number} €
-                      </span>
+                      <span>Normal</span>
+                      <strong>{product.precioPequena} €</strong>
                     </div>
 
-                    <div className="product-quantity">
-                      <button type="button" onClick={() => handleChange(size, -1)}>
-                        -
+                    <div className="qty">
+                      <button onClick={() => handleChange("Pequena", -1)}>
+                        −
                       </button>
 
-                      <span className="quantity">
-                        {quantities[product.id]?.[size] || 0}
+                      <span>
+                        {quantities[product.id]?.Pequena || 0}
                       </span>
 
-                      <button type="button" onClick={() => handleChange(size, 1)}>
+                      <button onClick={() => handleChange("Pequena", 1)}>
                         +
                       </button>
                     </div>
                   </div>
-                ))
-              ) : (
-                <div className="size-row">
-                  <div className="size-info">
-                    <span className="size-name">Normal</span>
-                    <span className="size-price">{product.precioPequena} €</span>
-                  </div>
+                )}
+              </div>
 
-                  <div className="product-quantity">
-                    <button type="button" onClick={() => handleChange("Pequena", -1)}>
-                      -
-                    </button>
-
-                    <span className="quantity">
-                      {quantities[product.id]?.Pequena || 0}
-                    </span>
-
-                    <button type="button" onClick={() => handleChange("Pequena", 1)}>
-                      +
-                    </button>
-                  </div>
-                </div>
-              )}
+              <button
+                className="add-btn"
+                onClick={() => handleAddToCart(product)}
+                disabled={totalSelected === 0}
+              >
+                Añadir al carrito
+                {totalSelected > 0 && ` (${totalSelected})`}
+              </button>
             </div>
-
-            <button className="add-to-cart" onClick={() => handleAddToCart(product)}>
-              Añadir al carrito
-            </button>
           </div>
         );
       })}

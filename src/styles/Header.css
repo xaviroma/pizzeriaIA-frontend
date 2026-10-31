@@ -1,118 +1,249 @@
-/* Estilos del Header */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* CLAVE */
-  background-color: #333;
-  color: white;
+  height: 72px;
   z-index: 1000;
+
+  background: rgba(15, 15, 18, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.header-container {
+.header-inner {
+  max-width: 1200px;
   height: 100%;
+  margin: 0 auto;
+
   display: flex;
-  align-items: center; /* centra verticalmente */
+  align-items: center;
   justify-content: space-between;
+
   padding: 0 20px;
 }
 
-.nav-bar {
+/* BRAND */
+.brand {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap; /* Asegura que los elementos se acomoden en pantallas más pequeñas */
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand img {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.brand h1 {
+  font-size: 1.2rem;
+  color: white;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .nav-item {
-  color: white;
+  color: #bbb;
   text-decoration: none;
-  font-size: 1.2rem;
-  transition: color 0.3s;
+  font-size: 0.95rem;
+  transition: 0.2s;
+  padding: 6px 8px;
+  border-radius: 8px;
 }
 
 .nav-item:hover {
-  color: #ff6347;
+  color: white;
+  background: rgba(255,255,255,0.06);
 }
 
-.cart-link {
+/* CART */
+.cart {
   position: relative;
+  font-size: 1.3rem;
   color: white;
-  font-size: 1.5rem;
   text-decoration: none;
+
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255,77,77,0.15);
 }
 
-.cart-link span {
-  background-color: red;
-  color: white;
-  font-size: 0.9rem;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.cart span {
   position: absolute;
-  top: -8px;
-  right: -10px;
+  top: -6px;
+  right: -6px;
+
+  background: #ff4d4d;
+  color: white;
+  font-size: 0.75rem;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Logotipo */
-.header img {
-  height: 50px; /* Ajusta el tamaño del logotipo */
-  object-fit: contain;
-}
-
-/* Eliminar subrayado en el h1 dentro del Link */
-.logo-link {
-  text-decoration: none; /* Elimina el subrayado */
-}
-
-.logo-link h1 {
-  font-family: 'Arial', sans-serif; /* Puedes cambiar a cualquier fuente que te guste */
-  font-size: 2.5rem; /* Tamaño de fuente atractivo */
-  font-weight: 600; /* Peso de la fuente para mayor énfasis */
-  color: white; /* Asegura que el color sea blanco */
-  transition: color 0.3s ease, transform 0.3s ease; /* Animación para color y transformaciones */
-}
-
-.logo-link h1:hover {
-  color: #ff6347; /* Cambia el color al pasar el ratón */
-  transform: scale(1.1); /* Añade un pequeño efecto de agrandamiento */
-}
-
-/* Ajustes responsivos */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column; /* Pone los elementos en una columna para pantallas más pequeñas */
-    align-items: flex-start;
-  }
-
-  .nav-bar {
-    justify-content: center;
-    margin-top: 10px;
-  }
-
+/* RESPONSIVE */
+@media (max-width: 900px) {
   .nav-item {
-    font-size: 1rem; /* Reducir tamaño de texto en pantallas más pequeñas */
-  }
-
-  .cart-link {
-    font-size: 1.3rem;
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  .header {
-    padding: 10px 0;
+/* HAMBURGUESA */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+
+  background: rgba(15, 15, 18, 0.98);
+  backdrop-filter: blur(12px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  padding: 80px 20px;
+  z-index: 2000;
+
+  transition: right 0.3s ease;
+}
+
+.mobile-menu a {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 1.1rem;
+
+  padding: 10px;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.04);
+}
+
+.mobile-menu a:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+/* OPEN STATE */
+.mobile-menu.open {
+  right: 0;
+}
+
+/* OVERLAY */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: 0.2s ease;
+  z-index: 1999;
+}
+
+.mobile-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .nav {
+    display: none;
   }
 
-  .nav-item {
-    font-size: 0.9rem; /* Reducir más el tamaño de texto */
+  .hamburger {
+    display: block;
   }
+}
 
-  .cart-link {
-    font-size: 1.2rem;
-  }
+.close-menu {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+
+  background: rgba(255,255,255,0.06);
+  border: none;
+  color: white;
+
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
+
+  border-radius: 10px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+.close-menu:hover {
+  background: rgba(255,255,255,0.12);
+  transform: scale(1.05);
+}
+
+.mobile-title {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+
+  margin-bottom: 10px;
+  padding: 0 4px;
+
+  letter-spacing: 0.5px;
+
+  opacity: 0.9;
+}
+
+.cart-mobile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cart-mobile span {
+  background: #ff4d4d;
+  color: white;
+
+  font-size: 0.75rem;
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

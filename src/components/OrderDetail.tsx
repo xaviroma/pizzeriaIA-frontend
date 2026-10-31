@@ -2,20 +2,30 @@ import React, { useEffect } from "react";
 import { CartItem } from "./types";
 import "../styles/OrderDetail.css";
 import { Link } from "react-router-dom";
+import api from "../axiosConfig";
 
 interface OrderDetailProps {
   cart: CartItem[];
-  onUpdateQuantity: (productId: number, size: CartItem["tamañoSeleccionado"], quantity: number) => void;
-  onRemoveFromCart: (productId: number, size: CartItem["tamañoSeleccionado"]) => void;
+  onUpdateQuantity: (
+    productId: number,
+    size: CartItem["tamañoSeleccionado"],
+    quantity: number
+  ) => void;
+  onRemoveFromCart: (
+    productId: number,
+    size: CartItem["tamañoSeleccionado"]
+  ) => void;
+  onClearCart: () => void;
 }
 
 const OrderDetail: React.FC<OrderDetailProps> = ({
   cart,
   onUpdateQuantity,
-  onRemoveFromCart
+  onRemoveFromCart,
+  onClearCart,
 }) => {
   useEffect(() => {
-    console.log("[PizzeriaIA] OrderDetail montado, items en carrito:", cart.length, cart);
+    console.log("[PizzeriaIA] Cart:", cart);
   }, [cart]);
 
   const total = cart.reduce((acc, product) => {
@@ -29,91 +39,160 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
     return acc + price * product.quantity;
   }, 0);
 
-  console.log("[PizzeriaIA] OrderDetail total:", total);
+  const handleCheckout = async () => {
+    try {
+      const pedidoResponse = await api.post("/pedidos", {
+        clienteId: 1,
+        cart: cart.map((item) => ({
+          productoId: item.id,
+          tamañoSeleccionado: item.tamañoSeleccionado,
+          quantity: item.quantity,
+          ingredientesIds: item.ingredientesIds ?? [],
+        })),
+      });
+
+      const pedidoId = pedidoResponse.data;
+
+      const stripeResponse = await api.post(
+        `/payments/create-session?pedidoId=${pedidoId}`
+      );
+
+      window.location.href = stripeResponse.data;
+    } catch (error) {
+      console.error("Error en checkout", error);
+    }
+  };
 
   return (
-    <div className="order-detail">
-      <h2>Detalles del Pedido</h2>
+    <div className="order-page">
+      <div className="order-container">
 
-      {cart.length === 0 ? (
-        <p>Tu carrito está vacío.</p>
-      ) : (
-        <div>
-          <ul>
-            {cart.map((product) => (
-              <li key={`${product.id}-${product.tamañoSeleccionado}`} className="order-item">
-                <img
-                  src={
-                    product.imagen
-                      ? `/images/${product.imagen}`
-                      : "/images/imagen_no_disponible.jpg"
-                  }
-                  alt={product.nombre}
-                />
+        <header className="order-header">
+          <h2>Tu pedido</h2>
+          <p className="subtitle">Revisa y confirma tus productos</p>
+        </header>
 
-                <div>
-                  <h3>
-                    {product.nombre} - {product.tamañoSeleccionado}
-                  </h3>
+        {cart.length === 0 ? (
+          <div className="empty-cart">
+            <div className="empty-icon">🍕</div>
+            <h3>Tu carrito está vacío</h3>
+            <p>Añade productos del menú para empezar tu pedido</p>
 
-                  <p>
-                    {product.quantity} x $
-                    {product.tamañoSeleccionado === "Pequena"
-                      ? product.precioPequena
-                      : product.tamañoSeleccionado === "Mediana"
-                      ? product.precioMediana
-                      : product.precioFamiliar}
-                  </p>
+            <Link to="/" className="action-btn primary">
+              Ir al menú
+            </Link>
+          </div>
+        ) : (
+          <>
+            <ul className="order-list">
+              {cart.map((product) => {
+                const price =
+                  product.tamañoSeleccionado === "Pequena"
+                    ? product.precioPequena
+                    : product.tamañoSeleccionado === "Mediana"
+                    ? product.precioMediana
+                    : product.precioFamiliar;
 
-                  <div className="order-item-actions">
-                    <div className="quantity-controls">
-                      <button
-                        onClick={() =>
-                          onUpdateQuantity(
-                            product.id,
-                            product.tamañoSeleccionado,
-                            product.quantity - 1
-                          )
+                return (
+                  <li
+                    key={`${product.id}-${product.tamañoSeleccionado}`}
+                    className="order-item"
+                  >
+                    <div className="item-left">
+                      <img
+                        src={
+                          product.imagen
+                            ? `/images/${product.imagen}`
+                            : "/images/imagen_no_disponible.jpg"
                         }
-                        disabled={product.quantity === 1}
-                      >
-                        -
-                      </button>
+                        alt={product.nombre}
+                      />
 
-                      <span>{product.quantity}</span>
-
-                      <button
-                        onClick={() =>
-                          onUpdateQuantity(
-                            product.id,
-                            product.tamañoSeleccionado,
-                            product.quantity + 1
-                          )
-                        }
-                      >
-                        +
-                      </button>
+                      <div className="item-info">
+                        <h3>{product.nombre}</h3>
+                        <span>{product.tamañoSeleccionado}</span>
+                        <strong>{price.toFixed(2)} €</strong>
+                      </div>
                     </div>
 
-                    <button
-                      onClick={() =>
-                        onRemoveFromCart(product.id, product.tamañoSeleccionado)
-                      }
-                      className="remove-btn"
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                    <div className="item-right">
+                      <div className="quantity-controls">
+                        <button
+                          onClick={() =>
+                            onUpdateQuantity(
+                              product.id,
+                              product.tamañoSeleccionado,
+                              product.quantity - 1
+                            )
+                          }
+                          disabled={product.quantity === 1}
+                        >
+                          −
+                        </button>
 
-          <h3>Total: ${total.toFixed(2)}</h3>
-        </div>
-      )}
+                        <span>{product.quantity}</span>
 
-      <Link to="/">Volver al Menú</Link>
+                        <button
+                          onClick={() =>
+                            onUpdateQuantity(
+                              product.id,
+                              product.tamañoSeleccionado,
+                              product.quantity + 1
+                            )
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <button
+                        onClick={() =>
+                          onRemoveFromCart(
+                            product.id,
+                            product.tamañoSeleccionado
+                          )
+                        }
+                        className="remove-btn"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="order-summary">
+              <div className="total">
+                <span>Total</span>
+                <strong>{total.toFixed(2)} €</strong>
+              </div>
+
+              <button onClick={handleCheckout} className="checkout-btn">
+                Pagar ahora
+              </button>
+            </div>
+          </>
+        )}
+
+        <footer className="bottom-actions">
+          <Link to="/" className="action-btn">
+            Volver
+          </Link>
+
+          {cart.length > 0 && (
+            <button
+              className="action-btn danger"
+              onClick={() => {
+                if (window.confirm("¿Vaciar carrito?")) onClearCart();
+              }}
+            >
+              Vaciar
+            </button>
+          )}
+        </footer>
+
+      </div>
     </div>
   );
 };

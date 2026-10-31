@@ -1,6 +1,3 @@
-/* App.css */
-
-/* Estilos generales */
 * {
   margin: 0;
   padding: 0;
@@ -9,57 +6,92 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9; /* Fondo suave para todo el cuerpo */
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  color: white;
 }
 
-/* Contenedor principal */
+/* APP WRAPPER (FONDO GLOBAL REAL) */
 .App {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  /* 🔥 FONDO MÁS LIMPIO / PREMIUM */
+  background:
+    radial-gradient(
+      circle at 20% 15%,
+      rgba(120, 140, 255, 0.06),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 85% 25%,
+      rgba(255, 255, 255, 0.04),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(255, 120, 120, 0.03),
+      transparent 60%
+    ),
+    linear-gradient(
+      180deg,
+      #0f0f12 0%,
+      #0b0c10 50%,
+      #090a0d 100%
+    );
+
+  background-attachment: fixed;
 }
 
-/* Estilos del header */
+/* HEADER GLOBAL */
 header {
-  background-color: #333;
+  background: rgba(21, 22, 27, 0.75);
+  backdrop-filter: blur(14px);
   color: white;
+
   padding: 20px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: fixed; /* Fija el header en la parte superior */
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; /* Asegura que el header esté sobre otros elementos */
-  padding-top: 20px;
+  z-index: 1000;
 }
 
-/* Contenedor dentro del header */
+/* HEADER INTERNAL */
 .header-container {
   height: 100%;
   display: flex;
-  align-items: center; /* centra verticalmente */
+  align-items: center;
   justify-content: space-between;
   padding: 0 20px;
 }
 
-/* Estilo para el menú */
+/* MAIN CONTENT */
+.main-content {
+  flex-grow: 1;
+  padding-top: 80px;
+
+  background: transparent;
+}
+
+/* MENU */
 .menu {
   display: flex;
   justify-content: space-around;
   align-items: center;
   gap: 20px;
+
   padding: 20px 0;
   margin-top: 20px;
-  background-color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+
+  background: transparent;
 }
 
-/* Elementos del menú */
+/* CATEGORY */
 .category {
   display: flex;
   justify-content: space-around;
@@ -67,88 +99,52 @@ header {
   width: 100%;
 }
 
+/* MENU ITEMS */
 .menu-item {
-  color: #333;
+  color: #eaeaea;
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-  background-color: #f9f9f9;
-  border: 2px solid transparent;
-}
 
-.menu-item img {
-  width: 100px; /* Aumenté el tamaño de la imagen */
-  height: 100px; /* Aumenté el tamaño de la imagen */
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+
+  background: rgba(25, 26, 32, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  backdrop-filter: blur(10px);
+
+  transition: 0.25s ease;
 }
 
 .menu-item:hover {
-  background-color: #2d3748; /* Fondo gris oscuro para hover */
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(35, 36, 44, 0.85);
+  transform: translateY(-3px);
 }
 
-.menu-item:active {
-  background-color: #e63946; /* Color de fondo rojo al hacer clic */
-  transform: scale(1.03);
-  box-shadow: 0 0 15px rgba(233, 180, 13, 0.5); /* Sombra dorada */
-}
-
-/* Ajustar el espacio superior para no solaparse con el header */
-.main-content {
-  flex-grow: 1;
-  padding-top: 80px; /* Ajusta el padding superior para que no se superponga al header fijo */
-}
-
-/* Estilos del footer */
+/* FOOTER */
 footer {
-  background-color: #333;
+  background: rgba(21, 22, 27, 0.75);
+  backdrop-filter: blur(12px);
+
   color: white;
   text-align: center;
+
   padding: 20px;
   font-size: 1rem;
+
   margin-top: auto;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Ajustes responsivos */
-
-/* Pantallas pequeñas (máximo 768px) */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .menu {
     flex-direction: column;
-    padding: 15px;
-  }
-
-  .menu-item {
-    font-size: 1rem;
-    padding: 15px;
   }
 
   .category {
     flex-direction: column;
-  }
-
-}
-
-/* Pantallas muy pequeñas (máximo 480px) */
-@media (max-width: 480px) {
-  .menu-item {
-    font-size: 0.9rem;
-    padding: 12px;
-  }
-
-  footer {
-    font-size: 0.9rem;
-    padding: 15px;
-  }
-
-  .product-item img {
-    height: 200px; /* Ajusté las imágenes en pantallas muy pequeñas */
   }
 }

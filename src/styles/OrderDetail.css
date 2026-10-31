@@ -1,204 +1,263 @@
-/* Estilos para OrderDetail */
-.order-detail {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-  }
-  
-  .order-detail h2 {
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .order-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  /* Aseguramos que la imagen sea pequeña y redonda */
-  .order-item img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .order-item div {
-    flex-grow: 1;
-    margin-left: 15px;
-    text-align: left;
-  }
-  
-  .order-item h3 {
-    font-size: 1rem;
-    margin: 0;
-    color: #444;
-  }
-  
-  .order-item p {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  .order-detail h3 {
-    color: #e63946;
-    font-size: 1.5rem;
-    margin-top: 20px;
-  }
-  
-  /* Estilo para el botón de volver al menú */
-  .order-detail a {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #e63946;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
-  
-  .order-detail a:hover {
-    background-color: #d62839;
-  }
-  
-  /* Alinear los botones +, - y eliminar a la derecha */
-  .order-item-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px; /* Espacio entre los botones */
-  }
-  
-  /* Estilo para los botones de cantidad (+ y -) */
-  .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .quantity-controls button {
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    color: #333;
-  }
-  
-  .quantity-controls button:disabled {
-    background-color: #e0e0e0;
-    cursor: not-allowed;
-  }
-  
-  .quantity-controls button:hover:not(:disabled) {
-    background-color: #f1a5a5;
-  }
-  
-  .quantity-controls button:active:not(:disabled) {
-    background-color: #e63946;
-    color: white;
-  }
-  
-  /* Estilo para el botón de eliminar */
-  .remove-btn {
-    background-color: #ff6347;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .remove-btn:hover {
-    background-color: #e53e2f;
-  }
-  
-  .remove-btn:active {
-    background-color: #c13c2b;
-  }
-  
-  /* Ajustes responsivos */
-  
-  /* Pantallas pequeñas (máximo 768px) */
-  @media (max-width: 768px) {
-    .order-detail {
-      max-width: 100%; /* Hacer que el contenedor ocupe el 100% del ancho */
-      padding: 15px; /* Reducir el padding en pantallas pequeñas */
-    }
-  
-    .order-item {
-      flex-direction: column; /* Alinear los elementos verticalmente */
-      align-items: flex-start;
-    }
-  
-    .order-item img {
-      width: 50px;
-      height: 50px; /* Reducir el tamaño de la imagen */
-    }
-  
-    .order-item h3 {
-      font-size: 1rem; /* Reducir el tamaño de la fuente */
-    }
-  
-    .order-item p {
-      font-size: 0.8rem; /* Reducir el tamaño de la fuente */
-    }
-  
-    .order-detail h3 {
-      font-size: 1.2rem; /* Reducir el tamaño del título */
-    }
-  
-    .quantity-controls button {
-      padding: 6px 12px; /* Reducir tamaño de los botones */
-    }
-  
-    .remove-btn {
-      padding: 6px 12px; /* Reducir tamaño del botón de eliminar */
-    }
-  }
-  
-  /* Pantallas muy pequeñas (máximo 480px) */
-  @media (max-width: 480px) {
-    .order-detail {
-      padding: 10px; /* Reducir padding aún más */
-    }
-  
-    .order-item img {
-      width: 40px; /* Reducir el tamaño de la imagen */
-      height: 40px;
-    }
-  
-    .order-item h3 {
-      font-size: 0.9rem; /* Reducir tamaño de fuente */
-    }
-  
-    .order-item p {
-      font-size: 0.7rem; /* Reducir tamaño de fuente */
-    }
-  
-    .order-detail h3 {
-      font-size: 1rem; /* Reducir tamaño de título */
-    }
-  
-    .quantity-controls button {
-      padding: 5px 10px; /* Ajustar tamaño de los botones */
-    }
-  
-    .remove-btn {
-      padding: 5px 10px; /* Ajustar tamaño del botón */
-    }
-  }
-  
+.order-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #0f0f12;
+  padding: 40px 16px;
+  font-family: system-ui, sans-serif;
+}
+
+.order-container {
+  width: 100%;
+  max-width: 760px;
+  background: #15161b;
+  border-radius: 18px;
+  padding: 24px;
+
+  color: #fff;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 🔥 HEADER MEJORADO */
+.order-header {
+  padding: 18px 18px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 77, 77, 0.15),
+    rgba(255, 122, 89, 0.08)
+  );
+
+  border: 1px solid rgba(255, 77, 77, 0.2);
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* glow sutil */
+.order-header::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 77, 77, 0.08),
+    transparent 60%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+
+.order-header h2 {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.subtitle {
+  color: #cfcfcf;
+  margin-top: 6px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* EMPTY STATE */
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 60px 20px;
+  margin: 10px 0;
+
+  background: #1c1d24;
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 48px;
+}
+
+.empty-cart h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.empty-cart p {
+  margin: 0;
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+/* LIST */
+.order-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ITEM */
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #1c1d24;
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.order-item img {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* INFO ITEM */
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-info h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.item-info span {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.item-info strong {
+  color: #ff4d4d;
+}
+
+/* RIGHT */
+.item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #111;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.quantity-controls button {
+  background: #2a2a2a;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.quantity-controls button:hover {
+  background: #3a3a3a;
+}
+
+.remove-btn {
+  background: transparent;
+  border: 1px solid #ff4d4d;
+  color: #ff4d4d;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: #ff4d4d;
+  color: white;
+}
+
+/* SUMMARY */
+.order-summary {
+  margin-top: 10px;
+  padding: 16px;
+  background: #1c1d24;
+  border-radius: 14px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.total span {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+.total strong {
+  font-size: 1.3rem;
+  color: #ff4d4d;
+}
+
+.checkout-btn {
+  background: linear-gradient(135deg, #ff4d4d, #ff7a59);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* FOOTER */
+.bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.action-btn {
+  background: #2a2a2a;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn.danger {
+  background: #ff4d4d;
+}

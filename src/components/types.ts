@@ -17,4 +17,5 @@ export type Size = "Pequena" | "Mediana" | "Familiar";
 export interface CartItem extends ProductType {
   quantity: number;
   tamañoSeleccionado: Size;
+  ingredientesIds?: number[];
 }

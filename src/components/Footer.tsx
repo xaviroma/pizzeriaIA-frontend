@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import "../styles/Footer.css"; // Estilo del Footer
+import "../styles/Footer.css";
 
 const Footer: React.FC = () => {
   useEffect(() => {
-    console.log("[PizzeriaIA] Footer montado");
+    console.log("[PizzeriaIA] Footer mounted");
   }, []);
 
   return (
     <footer className="footer">
-      <div className="footer-container">
-        <p>&copy; 2025 Pizza & Burger JM. Todos los derechos reservados.</p>
+      <div className="footer-inner">
+        <p>🍕 Pizza & Burger JM</p>
+        <span>© 2026 Todos los derechos reservados</span>
       </div>
     </footer>
   );

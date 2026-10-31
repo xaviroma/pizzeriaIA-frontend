@@ -14,6 +14,9 @@ import ProductList from "./components/ProductList";
 import OrderDetail from "./components/OrderDetail";
 import Carousel from "./components/Carousel";
 
+import PaymentSuccess from "./components/PaymentSuccess";
+import PaymentCancel from "./components/PaymentCancel";
+
 import "./App.css";
 
 import { ProductType, CartItem } from "./components/types";
@@ -118,6 +121,11 @@ const App: React.FC = () => {
           )
       )
     );
+  };
+
+  const handleClearCart = () => {
+    console.log("[PizzeriaIA] Vaciando carrito");
+    setCart([]);
   };
 
   const logCategoryProducts = (category: string) => {
@@ -232,8 +240,18 @@ const App: React.FC = () => {
                   cart={cart}
                   onUpdateQuantity={updateQuantity}
                   onRemoveFromCart={removeFromCart}
+                  onClearCart={handleClearCart}
                 />
               }
+            />
+            <Route
+              path="/success"
+              element={<PaymentSuccess />}
+            />
+
+            <Route
+              path="/cancel"
+              element={<PaymentCancel />}
             />
           </Routes>
         </div>
