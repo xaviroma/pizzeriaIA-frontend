@@ -4,8 +4,8 @@ import "../styles/Cart.css";
 
 interface CartProps {
   cart: CartItem[];
-  onRemoveFromCart: (productId: number, size: CartItem["tamañoSeleccionado"]) => void;
-  onUpdateQuantity: (productId: number, size: CartItem["tamañoSeleccionado"], quantity: number) => void;
+  onRemoveFromCart: (productId: number, size: CartItem["tamanoSeleccionado"]) => void;
+  onUpdateQuantity: (productId: number, size: CartItem["tamanoSeleccionado"], quantity: number) => void;
 }
 
 const Cart: React.FC<CartProps> = ({
@@ -17,9 +17,9 @@ const Cart: React.FC<CartProps> = ({
 
   const total = cart.reduce((acc, product) => {
     const price =
-      product.tamañoSeleccionado === "Pequena"
+      product.tamanoSeleccionado === "Pequena"
         ? product.precioPequena
-        : product.tamañoSeleccionado === "Mediana"
+        : product.tamanoSeleccionado === "Mediana"
         ? product.precioMediana
         : product.precioFamiliar;
 
@@ -36,7 +36,7 @@ const Cart: React.FC<CartProps> = ({
         <div>
           <ul>
             {cart.map((product) => (
-              <li key={`${product.id}-${product.tamañoSeleccionado}`} className="cart-item">
+              <li key={`${product.id}-${product.tamanoSeleccionado}`} className="cart-item">
                 <div className="cart-item-info">
                   <img
                     src={
@@ -49,14 +49,14 @@ const Cart: React.FC<CartProps> = ({
 
                   <div className="cart-item-details">
                     <h3>
-                      {product.nombre} - {product.tamañoSeleccionado}
+                      {product.nombre} - {product.tamanoSeleccionado}
                     </h3>
 
                     <p>
                       $
-                      {product.tamañoSeleccionado === "Pequena"
+                      {product.tamanoSeleccionado === "Pequena"
                         ? product.precioPequena
-                        : product.tamañoSeleccionado === "Mediana"
+                        : product.tamanoSeleccionado === "Mediana"
                         ? product.precioMediana
                         : product.precioFamiliar}{" "}
                       x {product.quantity}
@@ -70,7 +70,7 @@ const Cart: React.FC<CartProps> = ({
                       onClick={() =>
                         onUpdateQuantity(
                           product.id,
-                          product.tamañoSeleccionado,
+                          product.tamanoSeleccionado,
                           product.quantity - 1
                         )
                       }
@@ -85,7 +85,7 @@ const Cart: React.FC<CartProps> = ({
                       onClick={() =>
                         onUpdateQuantity(
                           product.id,
-                          product.tamañoSeleccionado,
+                          product.tamanoSeleccionado,
                           product.quantity + 1
                         )
                       }
@@ -96,7 +96,7 @@ const Cart: React.FC<CartProps> = ({
 
                   <button
                     onClick={() =>
-                      onRemoveFromCart(product.id, product.tamañoSeleccionado)
+                      onRemoveFromCart(product.id, product.tamanoSeleccionado)
                     }
                     className="remove-btn"
                   >

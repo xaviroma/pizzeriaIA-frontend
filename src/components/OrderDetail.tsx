@@ -8,12 +8,12 @@ interface OrderDetailProps {
   cart: CartItem[];
   onUpdateQuantity: (
     productId: number,
-    size: CartItem["tamañoSeleccionado"],
+    size: CartItem["tamanoSeleccionado"],
     quantity: number
   ) => void;
   onRemoveFromCart: (
     productId: number,
-    size: CartItem["tamañoSeleccionado"]
+    size: CartItem["tamanoSeleccionado"]
   ) => void;
   onClearCart: () => void;
 }
@@ -30,9 +30,9 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
 
   const total = cart.reduce((acc, product) => {
     const price =
-      product.tamañoSeleccionado === "Pequena"
+      product.tamanoSeleccionado === "Pequena"
         ? product.precioPequena
-        : product.tamañoSeleccionado === "Mediana"
+        : product.tamanoSeleccionado === "Mediana"
         ? product.precioMediana
         : product.precioFamiliar;
 
@@ -45,7 +45,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
         clienteId: 1,
         cart: cart.map((item) => ({
           productoId: item.id,
-          tamañoSeleccionado: item.tamañoSeleccionado,
+          tamanoSeleccionado: item.tamanoSeleccionado,
           quantity: item.quantity,
           ingredientesIds: item.ingredientesIds ?? [],
         })),
@@ -87,15 +87,15 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
             <ul className="order-list">
               {cart.map((product) => {
                 const price =
-                  product.tamañoSeleccionado === "Pequena"
+                  product.tamanoSeleccionado === "Pequena"
                     ? product.precioPequena
-                    : product.tamañoSeleccionado === "Mediana"
+                    : product.tamanoSeleccionado === "Mediana"
                     ? product.precioMediana
                     : product.precioFamiliar;
 
                 return (
                   <li
-                    key={`${product.id}-${product.tamañoSeleccionado}`}
+                    key={`${product.id}-${product.tamanoSeleccionado}`}
                     className="order-item"
                   >
                     <div className="item-left">
@@ -110,7 +110,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
 
                       <div className="item-info">
                         <h3>{product.nombre}</h3>
-                        <span>{product.tamañoSeleccionado}</span>
+                        <span>{product.tamanoSeleccionado}</span>
                         <strong>{price.toFixed(2)} €</strong>
                       </div>
                     </div>
@@ -121,7 +121,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
                           onClick={() =>
                             onUpdateQuantity(
                               product.id,
-                              product.tamañoSeleccionado,
+                              product.tamanoSeleccionado,
                               product.quantity - 1
                             )
                           }
@@ -136,7 +136,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
                           onClick={() =>
                             onUpdateQuantity(
                               product.id,
-                              product.tamañoSeleccionado,
+                              product.tamanoSeleccionado,
                               product.quantity + 1
                             )
                           }
@@ -149,7 +149,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
                         onClick={() =>
                           onRemoveFromCart(
                             product.id,
-                            product.tamañoSeleccionado
+                            product.tamanoSeleccionado
                           )
                         }
                         className="remove-btn"

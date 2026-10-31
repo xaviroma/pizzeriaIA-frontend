@@ -41,14 +41,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onAddToCart }) => {
           .filter((size) => quantities[size] > 0)
           .map((size) => ({
             ...product,
-            tamañoSeleccionado: size,
+            tamanoSeleccionado: size,
             quantity: quantities[size],
           }))
       : quantities.Pequena > 0
       ? [
           {
             ...product,
-            tamañoSeleccionado: "Pequena",
+            tamanoSeleccionado: "Pequena",
             quantity: quantities.Pequena,
           },
         ]

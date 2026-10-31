@@ -33,7 +33,7 @@ const ProductList: React.FC<ProductListProps> = ({
 
     const itemsToAdd: CartItem[] = productEntries.map(([size, quantity]) => ({
       ...product,
-      tamañoSeleccionado: size as "Pequena" | "Mediana" | "Familiar",
+      tamanoSeleccionado: size as "Pequena" | "Mediana" | "Familiar",
       quantity,
     }));
 

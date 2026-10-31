@@ -73,7 +73,7 @@ const App: React.FC = () => {
       const index = newCart.findIndex(
         (p) =>
           p.id === item.id &&
-          p.tamañoSeleccionado === item.tamañoSeleccionado
+          p.tamanoSeleccionado === item.tamanoSeleccionado
       );
 
       if (index !== -1) {
@@ -93,14 +93,14 @@ const App: React.FC = () => {
 
   const updateQuantity = (
     productId: number,
-    size: CartItem["tamañoSeleccionado"],
+    size: CartItem["tamanoSeleccionado"],
     quantity: number
   ) => {
     console.log("[PizzeriaIA] updateQuantity:", { productId, size, quantity });
     setCart((prevCart) =>
       prevCart.map((product) =>
         product.id === productId &&
-        product.tamañoSeleccionado === size
+        product.tamanoSeleccionado === size
           ? { ...product, quantity }
           : product
       )
@@ -109,7 +109,7 @@ const App: React.FC = () => {
 
   const removeFromCart = (
     productId: number,
-    size: CartItem["tamañoSeleccionado"]
+    size: CartItem["tamanoSeleccionado"]
   ) => {
     console.log("[PizzeriaIA] removeFromCart:", { productId, size });
     setCart((prevCart) =>
@@ -117,7 +117,7 @@ const App: React.FC = () => {
         (product) =>
           !(
             product.id === productId &&
-            product.tamañoSeleccionado === size
+            product.tamanoSeleccionado === size
           )
       )
     );
