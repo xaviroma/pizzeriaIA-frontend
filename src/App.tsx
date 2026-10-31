@@ -25,7 +25,6 @@ const RouteLogger: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("[PizzeriaIA] Ruta actual:", location.pathname);
   }, [location.pathname]);
 
   return null;
@@ -35,26 +34,20 @@ const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [products, setProducts] = useState<ProductType[]>([]);
 
-  console.log("[PizzeriaIA] App render - productos:", products.length, "carrito:", cart.length);
 
   useEffect(() => {
-    console.log("[PizzeriaIA] App montado");
   }, []);
 
   useEffect(() => {
-    console.log("[PizzeriaIA] Productos actualizados:", products.length, products);
   }, [products]);
 
   useEffect(() => {
-    console.log("[PizzeriaIA] Carrito actualizado:", cart);
   }, [cart]);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log("[PizzeriaIA] Llamando backend GET /productos...");
       try {
         const response = await api.get("/productos");
-        console.log("[PizzeriaIA] Productos recibidos:", response.data?.length ?? 0, response.data);
         setProducts(response.data);
       } catch (error) {
         console.error("[PizzeriaIA] Error al obtener los productos", error);
@@ -65,7 +58,6 @@ const App: React.FC = () => {
   }, []);
 
   const addToCart = (items: CartItem[]) => {
-  console.log("[PizzeriaIA] addToCart:", items);
   setCart((prevCart) => {
     const newCart = [...prevCart];
 
@@ -86,7 +78,6 @@ const App: React.FC = () => {
       }
     });
 
-    console.log("[PizzeriaIA] Carrito tras addToCart:", newCart);
     return newCart;
   });
 };
@@ -96,7 +87,6 @@ const App: React.FC = () => {
     size: CartItem["tamanoSeleccionado"],
     quantity: number
   ) => {
-    console.log("[PizzeriaIA] updateQuantity:", { productId, size, quantity });
     setCart((prevCart) =>
       prevCart.map((product) =>
         product.id === productId &&
@@ -111,7 +101,6 @@ const App: React.FC = () => {
     productId: number,
     size: CartItem["tamanoSeleccionado"]
   ) => {
-    console.log("[PizzeriaIA] removeFromCart:", { productId, size });
     setCart((prevCart) =>
       prevCart.filter(
         (product) =>
@@ -124,13 +113,11 @@ const App: React.FC = () => {
   };
 
   const handleClearCart = () => {
-    console.log("[PizzeriaIA] Vaciando carrito");
     setCart([]);
   };
 
   const logCategoryProducts = (category: string) => {
     const filtered = products.filter((p) => p.categoria?.nombre === category);
-    console.log(`[PizzeriaIA] Productos filtrados (${category}):`, filtered.length, filtered);
     return filtered;
   };
 

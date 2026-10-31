@@ -25,7 +25,6 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
   onClearCart,
 }) => {
   useEffect(() => {
-    console.log("[PizzeriaIA] Cart:", cart);
   }, [cart]);
 
   const total = cart.reduce((acc, product) => {

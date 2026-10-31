@@ -11,7 +11,6 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    console.log("[PizzeriaIA] Header:", location.pathname, cartItemCount);
   }, [location.pathname, cartItemCount]);
 
   const closeMenu = () => setOpen(false);

@@ -10,6 +10,7 @@ export interface ProductType {
     id: number;
     nombre: string;
   };
+  disponible: boolean;
 }
 
 export type Size = "Pequena" | "Mediana" | "Familiar";

@@ -13,7 +13,6 @@ const Cart: React.FC<CartProps> = ({
   onRemoveFromCart,
   onUpdateQuantity
 }) => {
-  console.log("CART FULL:", cart);
 
   const total = cart.reduce((acc, product) => {
     const price =

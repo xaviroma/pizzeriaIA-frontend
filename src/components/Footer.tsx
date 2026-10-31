@@ -3,7 +3,6 @@ import "../styles/Footer.css";
 
 const Footer: React.FC = () => {
   useEffect(() => {
-    console.log("[PizzeriaIA] Footer mounted");
   }, []);
 
   return (

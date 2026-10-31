@@ -4,7 +4,6 @@ import "../styles/Menu.css";
 
 const Menu: React.FC = () => {
   useEffect(() => {
-    console.log("[PizzeriaIA] Menu mounted");
   }, []);
 
   return (

@@ -18,7 +18,7 @@ const ProductList: React.FC<ProductListProps> = ({
   }>({});
 
   useEffect(() => {
-    console.log("[PizzeriaIA] ProductList:", category, products.length);
+    console.log("Disponibilidad:", products.map(p => ({nombre: p.nombre, disponible: p.disponible})));
   }, [category, products]);
 
   const isValidPrice = (value: any) =>
@@ -93,6 +93,12 @@ const ProductList: React.FC<ProductListProps> = ({
             <div className="product-content">
               <h3>{product.nombre}</h3>
 
+              {!product.disponible && (
+                <span className="unavailable-badge">
+                  No disponible temporalmente
+                </span>
+              )}
+
               <p className="description">{product.descripcion}</p>
 
               <div className="sizes">
@@ -113,7 +119,8 @@ const ProductList: React.FC<ProductListProps> = ({
                         </div>
 
                         <div className="qty">
-                          <button onClick={() => handleChange(size, -1)}>
+                          <button onClick={() => handleChange(size, -1)}
+                            disabled={!product.disponible}>
                             −
                           </button>
 
@@ -121,7 +128,8 @@ const ProductList: React.FC<ProductListProps> = ({
                             {quantities[product.id]?.[size] || 0}
                           </span>
 
-                          <button onClick={() => handleChange(size, 1)}>
+                          <button onClick={() => handleChange(size, 1)}
+                            disabled={!product.disponible}>
                             +
                           </button>
                         </div>
@@ -136,7 +144,8 @@ const ProductList: React.FC<ProductListProps> = ({
                     </div>
 
                     <div className="qty">
-                      <button onClick={() => handleChange("Pequena", -1)}>
+                      <button onClick={() => handleChange("Pequena", -1)}
+                        disabled={!product.disponible}>
                         −
                       </button>
 
@@ -144,7 +153,8 @@ const ProductList: React.FC<ProductListProps> = ({
                         {quantities[product.id]?.Pequena || 0}
                       </span>
 
-                      <button onClick={() => handleChange("Pequena", 1)}>
+                      <button onClick={() => handleChange("Pequena", 1)}
+                        disabled={!product.disponible}>
                         +
                       </button>
                     </div>
@@ -155,7 +165,7 @@ const ProductList: React.FC<ProductListProps> = ({
               <button
                 className="add-btn"
                 onClick={() => handleAddToCart(product)}
-                disabled={totalSelected === 0}
+                disabled={!product.disponible || totalSelected === 0}
               >
                 Añadir al carrito
                 {totalSelected > 0 && ` (${totalSelected})`}

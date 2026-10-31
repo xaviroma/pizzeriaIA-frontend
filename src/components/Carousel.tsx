@@ -34,7 +34,6 @@ const Carousel: React.FC = () => {
   const [animKey, setAnimKey] = useState(0);
 
   useEffect(() => {
-    console.log("[PizzeriaIA] Carousel montado");
   }, []);
 
   return (
