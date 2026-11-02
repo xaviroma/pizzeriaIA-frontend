@@ -6,9 +6,6 @@ import api from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
-const { usuario } = useAuth();
-const navigate = useNavigate();
-
 interface OrderDetailProps {
   cart: CartItem[];
   onUpdateQuantity: (
@@ -29,6 +26,10 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
   onRemoveFromCart,
   onClearCart,
 }) => {
+
+  const { usuario } = useAuth();
+  const navigate = useNavigate();
+  
   useEffect(() => {
   }, [cart]);
 
