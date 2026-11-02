@@ -3,6 +3,11 @@ import { CartItem } from "./types";
 import "../styles/OrderDetail.css";
 import { Link } from "react-router-dom";
 import api from "../axiosConfig";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+
+const { usuario } = useAuth();
+const navigate = useNavigate();
 
 interface OrderDetailProps {
   cart: CartItem[];
@@ -39,6 +44,15 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
   }, 0);
 
   const handleCheckout = async () => {
+    if (!usuario) {
+      navigate("/login", {
+        state: {
+          message: "Inicia sesión para realizar tu pedido.",
+          from: "/carrito"
+        }
+      });
+      return;
+    }
     try {
       const pedidoResponse = await api.post("/pedidos", {
         clienteId: 1,

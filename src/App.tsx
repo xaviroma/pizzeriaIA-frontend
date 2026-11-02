@@ -16,6 +16,9 @@ import Carousel from "./components/Carousel";
 
 import PaymentSuccess from "./components/PaymentSuccess";
 import PaymentCancel from "./components/PaymentCancel";
+import Register from "./components/Register";
+import { AuthProvider } from "./components/AuthContext";
+import Login from "./components/Login";
 
 import "./App.css";
 
@@ -122,6 +125,7 @@ const App: React.FC = () => {
   };
 
   return (
+    <AuthProvider>
     <Router>
       <RouteLogger />
       <div className="App">
@@ -231,6 +235,11 @@ const App: React.FC = () => {
                 />
               }
             />
+
+            <Route path="/registro" element={<Register />} />
+
+            <Route path="/login" element={<Login />} />
+
             <Route
               path="/success"
               element={<PaymentSuccess />}
@@ -240,12 +249,14 @@ const App: React.FC = () => {
               path="/cancel"
               element={<PaymentCancel />}
             />
+            
           </Routes>
         </div>
 
         <Footer />
       </div>
     </Router>
+    </AuthProvider>
   );
 };
 

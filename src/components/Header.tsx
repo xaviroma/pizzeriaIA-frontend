@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Header.css";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 interface HeaderProps {
   cartItemCount: number;
 }
 
 const Header: React.FC<HeaderProps> = ({ cartItemCount }) => {
-  const location = useLocation();
+const location = useLocation();
+const { usuario, logout } = useAuth();
+const navigate = useNavigate();
+
+const handleLogout = () => {
+  logout();
+  closeMenu();
+  navigate("/");
+};
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -46,6 +56,19 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount }) => {
               🛒
               {cartItemCount > 0 && <span>{cartItemCount}</span>}
             </Link>
+            {usuario ? (
+              <>
+                <span className="nav-item">Hola, {usuario.nombre}</span>
+                <button className="nav-item" onClick={handleLogout}>
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="nav-item">Entrar</Link>
+                <Link to="/registro" className="nav-item">Registrarse</Link>
+              </>
+            )}
           </nav>
 
         </div>
@@ -69,7 +92,18 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount }) => {
         <Link to="/Carrito" onClick={closeMenu} className="cart-mobile">
           🛒 Carrito
           {cartItemCount > 0 && <span>{cartItemCount}</span>}
-        </Link> 
+        </Link>
+        {usuario ? (
+          <>
+            <span>Hola, {usuario.nombre}</span>
+            <button onClick={handleLogout}>Cerrar sesión</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" onClick={closeMenu}>Entrar</Link>
+            <Link to="/registro" onClick={closeMenu}>Registrarse</Link>
+          </>
+        )}
       </div>
     </>
   );
